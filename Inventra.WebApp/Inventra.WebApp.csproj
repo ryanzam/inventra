@@ -7,4 +7,9 @@
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Inventra.Plugins\Inventra.Plugins.InMemory\Inventra.Plugins.InMemory.csproj" />
+    <ProjectReference Include="..\Inventra.UseCases\Inventra.UseCases.csproj" />
+  </ItemGroup>
+
 </Project>

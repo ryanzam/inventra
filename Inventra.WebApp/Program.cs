@@ -1,9 +1,13 @@
+using Inventra.Plugins.InMemory;
+using Inventra.UseCases.Interfaces;
 using Inventra.WebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
+
+builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 
 var app = builder.Build();
 

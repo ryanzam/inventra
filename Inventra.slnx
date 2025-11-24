@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="Inventra.CoreBusiness/Inventra.Entities.csproj" Id="4acab141-16c4-486f-b371-89d607b77ec8" />
+  <Project Path="Inventra.Plugins/Inventra.Plugins.InMemory/Inventra.Plugins.InMemory.csproj" Id="8c8e0cab-4214-40fd-b6a8-d339b0e0b1bf" />
+  <Project Path="Inventra.UseCases/Inventra.UseCases.csproj" Id="fe68a16e-2dd0-4dea-a2f2-e8b083ac5af6" />
   <Project Path="Inventra.WebApp/Inventra.WebApp.csproj" />
 </Solution>
