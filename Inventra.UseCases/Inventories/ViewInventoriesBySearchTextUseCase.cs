@@ -1,12 +1,13 @@
-﻿using Inventra.CoreBusiness;
+﻿using Inventra.Entities;
 using Inventra.UseCases.Interfaces;
+using Inventra.UseCases.Inventories.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Inventra.UseCases.Inventories
 {
-    public class ViewInventoriesBySearchTextUseCase
+    public class ViewInventoriesBySearchTextUseCase : IViewInventoriesBySearchTextUseCase
     {
         private readonly IInventoryRepository inventoryRepository;
 
@@ -15,7 +16,7 @@ namespace Inventra.UseCases.Inventories
             this.inventoryRepository = inventoryRepository;
         }
 
-        public async IEnumerable<Inventory> ExecuteAsync(string searchText = "")
+        public async Task<IEnumerable<Inventory>> ExecuteAsync(string searchText = "")
         {
             return await inventoryRepository.GetInventoriesBySearchText(searchText);
         }

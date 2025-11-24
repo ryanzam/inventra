@@ -1,4 +1,4 @@
-﻿using Inventra.CoreBusiness;
+﻿using Inventra.Entities;
 using Inventra.UseCases.Interfaces;
 using System.Reflection.Metadata.Ecma335;
 

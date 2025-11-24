@@ -1,5 +1,7 @@
 using Inventra.Plugins.InMemory;
 using Inventra.UseCases.Interfaces;
+using Inventra.UseCases.Inventories;
+using Inventra.UseCases.Inventories.interfaces;
 using Inventra.WebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents();
 
 builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
+
+builder.Services.AddTransient<IViewInventoriesBySearchTextUseCase, ViewInventoriesBySearchTextUseCase>();
 
 var app = builder.Build();
 

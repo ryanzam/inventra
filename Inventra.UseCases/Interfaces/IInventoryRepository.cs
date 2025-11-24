@@ -1,4 +1,4 @@
-﻿using Inventra.CoreBusiness;
+﻿using Inventra.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

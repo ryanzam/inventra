@@ -1,4 +1,4 @@
-﻿namespace Inventra.CoreBusiness
+﻿namespace Inventra.Entities
 {
     public class Inventory
     {
