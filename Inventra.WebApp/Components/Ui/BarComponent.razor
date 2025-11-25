@@ -1,0 +1,20 @@
+﻿<Bar Breakpoint="Breakpoint.Desktop"
+     Background="Background.Light"
+     ThemeContrast="ThemeContrast.Light">
+    <BarBrand>
+        @Title
+    </BarBrand>
+    <BarToggler />
+    <BarMenu>
+        <BarEnd>
+            <BarItem>
+                <Button Color="Color.Primary">Add</Button>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "";
+}

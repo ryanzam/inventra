@@ -28,5 +28,12 @@ namespace Inventra.Plugins.InMemory
 
             return _inventories.Where(i => i.InventoryName.Contains(searchText, StringComparison.OrdinalIgnoreCase))    ;
         }
+
+        public async Task<Inventory> AddInventory(Inventory inventory)
+        {
+            inventory.InventoryId = _inventories.Max(i => i.InventoryId) + 1;
+            _inventories.Add(inventory);
+            return await Task.FromResult(inventory);
+        }
     }
 }
