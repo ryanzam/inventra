@@ -1,3 +1,6 @@
+using Blazorise;
+using Blazorise.Icons.FontAwesome;
+using Blazorise.Tailwind;
 using Inventra.Plugins.InMemory;
 using Inventra.UseCases.Interfaces;
 using Inventra.UseCases.Inventories;
@@ -12,6 +15,11 @@ builder.Services.AddRazorComponents();
 builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 
 builder.Services.AddTransient<IViewInventoriesBySearchTextUseCase, ViewInventoriesBySearchTextUseCase>();
+
+builder.Services
+    .AddBlazorise()
+    .AddTailwindProviders()
+    .AddFontAwesomeIcons();
 
 var app = builder.Build();
 

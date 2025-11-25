@@ -1,17 +1,18 @@
 ﻿@inject IViewInventoriesBySearchTextUseCase ViewInventoriesBySearchTextUseCase
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Price</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (inventories is not null && inventories.Count > 0)
+<Table>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell>#</TableHeaderCell>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>Quantity</TableHeaderCell>
+            <TableHeaderCell>Price</TableHeaderCell>
+            <TableHeaderCell></TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+
+    <TableBody>
+        @if(inventories is not null && inventories.Count > 0)
         {
             @foreach (var inventory in inventories)
             {
@@ -20,10 +21,14 @@
         }
         else
         {
-            <Spinner />
+            <TableRow>
+                <TableRowCell ColSpan="5">
+                    <Spinner />
+                </TableRowCell>
+            </TableRow>
         }
-    </tbody>
-</table>
+    </TableBody>
+</Table>
 
 @code {
     private List<Inventory>? inventories;

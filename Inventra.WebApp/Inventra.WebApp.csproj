@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.8.7" />
+    <PackageReference Include="Blazorise.Tailwind" Version="1.8.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Inventra.Plugins\Inventra.Plugins.InMemory\Inventra.Plugins.InMemory.csproj" />
     <ProjectReference Include="..\Inventra.UseCases\Inventra.UseCases.csproj" />
   </ItemGroup>

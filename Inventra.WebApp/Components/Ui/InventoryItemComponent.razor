@@ -1,15 +1,20 @@
 ﻿
 @if(Inventory is not null)
 {
-    <tr>
-        <td>@Inventory.InventoryId</td>
-        <td>@Inventory.InventoryName</td>
-        <td>@Inventory.Quantity</td>
-        <td>@Inventory.Price</td>
-        <td>
-            <button type="button" class="btn btn-primary">Edit</button>
-        </td>
-    </tr>
+    <TableRow>
+        <TableRowHeader>@Inventory.InventoryId</TableRowHeader>
+        <TableRowCell>@Inventory.InventoryName</TableRowCell>
+        <TableRowCell>@Inventory.Quantity</TableRowCell>
+        <TableRowCell>@Inventory.Price</TableRowCell>
+        <TableRowCell>
+            <Button Color="Color.Primary">
+                Edit
+            </Button>
+            <Button Color="Color.Danger">
+                Delete
+            </Button>
+        </TableRowCell>
+    </TableRow>
 }
 else
 {
