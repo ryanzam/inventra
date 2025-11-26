@@ -1,9 +1,42 @@
 ﻿@page "/inventories"
 
-<BarComponent Title="Inventory List"/>
+@inject IViewInventoriesBySearchTextUseCase ViewInventoriesBySearchTextUseCase
+@inject IAddInventoryUseCase AddInventoryUseCase
 
-<InventoryListComponent />
+<BarComponent Title="Inventory List" OnClickAdd="@ShowModal"/>
+
+<InventoryListComponent Inventories="@inventories"/>
+
+<InventoryModalComponent modalVisible="@modalVisible" OnCloseModal="@CloseModal" Save="@SaveInventory"/>
 
 @code {
+    private List<Inventory> inventories = new();
+    private bool modalVisible = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        LoadInventories();
+    }
+
+    private async void LoadInventories()
+    {
+        inventories = (await ViewInventoriesBySearchTextUseCase.ExecuteAsync()).ToList();
+    }
+
+    private void ShowModal()
+    {
+        modalVisible = true;
+    }
+
+    private void CloseModal()
+    {
+        modalVisible = false;
+    }
+
+    private async Task SaveInventory(Inventory inventory)
+    {
+        await AddInventoryUseCase.ExecuteAsync(inventory);
+        modalVisible = false;
+        LoadInventories();
+    }
 }

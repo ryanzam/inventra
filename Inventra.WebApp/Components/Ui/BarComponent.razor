@@ -8,7 +8,7 @@
     <BarMenu>
         <BarEnd>
             <BarItem>
-                <Button Color="Color.Primary">Add</Button>
+                <Button Color="Color.Primary" Clicked="@HandleButtonAdd">Add</Button>
             </BarItem>
         </BarEnd>
     </BarMenu>
@@ -17,4 +17,12 @@
 @code {
     [Parameter]
     public string Title { get; set; } = "";
+
+    [Parameter]
+    public EventCallback OnClickAdd { get; set; }
+
+    private async Task HandleButtonAdd(MouseEventArgs e)
+    {
+        await OnClickAdd.InvokeAsync();
+    }
 }

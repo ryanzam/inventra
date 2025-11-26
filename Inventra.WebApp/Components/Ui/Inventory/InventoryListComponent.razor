@@ -1,5 +1,4 @@
-﻿@inject IViewInventoriesBySearchTextUseCase ViewInventoriesBySearchTextUseCase
-
+﻿
 <Table>
     <TableHeader>
         <TableRow>
@@ -31,10 +30,8 @@
 </Table>
 
 @code {
-    private List<Inventory>? inventories;
+    [Parameter]
+    public List<Inventory> inventories { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        inventories = (await ViewInventoriesBySearchTextUseCase.ExecuteAsync()).ToList();
-    }
+    
 }

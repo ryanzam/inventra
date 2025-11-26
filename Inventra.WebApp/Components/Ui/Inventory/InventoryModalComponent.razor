@@ -1,0 +1,72 @@
+﻿<Modal @bind-Visible="@modalVisible">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Add new inventory</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Inventory Name</FieldLabel>
+                <TextEdit Placeholder="Enter inventory..." @bind-Text="inventory.InventoryName"/>
+            </Field>
+            <Field>
+                <FieldLabel>Quantity</FieldLabel>
+                <NumericEdit TValue="int" Placeholder="Enter quantity..." @bind-Value="inventory.Quantity" />
+            </Field>
+            <Field>
+                <FieldLabel>Price</FieldLabel>
+                <NumericEdit TValue="double" Placeholder="Enter price..." @bind-Value="inventory.Price" />
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="@HideModal">Close</Button>
+            <Button Color="Color.Primary" Clicked="@SaveChanges">Save Changes</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+    [Parameter]
+    public Inventory Inventory { get; set; }
+
+    [Parameter]
+    public bool modalVisible { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<Inventory> Save { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnCloseModal { get; set; }
+
+    private Inventory inventory = new Inventory();
+
+    protected override void OnParametersSet()
+    {
+        if(Inventory is not null)
+        {
+            inventory = new Inventory
+            {
+                InventoryId = Inventory.InventoryId,
+                InventoryName = Inventory.InventoryName,
+                Quantity = Inventory.Quantity,
+                Price = Inventory.Price
+            };
+        } 
+        else
+        {
+            inventory = new Inventory();
+        }
+    }
+
+    private async Task SaveChanges(MouseEventArgs e)
+    {
+        await Save.InvokeAsync(inventory);
+        inventory = new Inventory();
+    }
+
+    private async Task HideModal(MouseEventArgs e)
+    {
+        inventory = new Inventory();
+        await OnCloseModal.InvokeAsync(false);
+    }
+}
