@@ -7,6 +7,8 @@ using Inventra.Plugins.InMemory;
 using Inventra.UseCases.Interfaces;
 using Inventra.UseCases.Inventories;
 using Inventra.UseCases.Inventories.interfaces;
+using Inventra.UseCases.Suppliers;
+using Inventra.UseCases.Suppliers.interfaces;
 using Inventra.WebApp.Components;
 using Inventra.WebApp.Validators;
 
@@ -21,6 +23,9 @@ builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 builder.Services.AddTransient<IViewInventoriesBySearchTextUseCase, ViewInventoriesBySearchTextUseCase>();
 builder.Services.AddTransient<ISaveInventoryUseCase, SaveInventoryUseCase>();
 builder.Services.AddTransient<IDeleteInventoryUseCase, DeleteInventoryUseCase>();
+
+builder.Services.AddSingleton<ISupplierRepository, SupplierRepository>();
+builder.Services.AddTransient<IViewSuppliersUseCase, ViewSuppliersUseCase>();
 
 
 builder.Services

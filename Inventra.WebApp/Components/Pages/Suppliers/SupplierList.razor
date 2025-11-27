@@ -1,0 +1,20 @@
+﻿@page "/suppliers"
+
+
+@inject IViewSuppliersUseCase ViewSuppliersUseCase
+
+<SupplierListComponent suppliers="@suppliers"/>
+
+@code {
+    public List<Supplier> suppliers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        LoadSuppliers();
+    }
+
+    private async void LoadSuppliers()
+    {
+        suppliers = (await ViewSuppliersUseCase.ExecuteAsync()).ToList();
+    }
+}

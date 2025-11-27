@@ -1,0 +1,62 @@
+﻿
+<Table>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell>#</TableHeaderCell>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>Contact Information</TableHeaderCell>
+            <TableHeaderCell></TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+
+    <TableBody>
+        @if (suppliers is not null && suppliers.Count > 0)
+        {
+            @foreach (var supplier in suppliers)
+            {
+                <TableRow>
+                    <TableRowHeader>@supplier.SupplierId</TableRowHeader>
+                    <TableRowCell>@supplier.SupplierName</TableRowCell>
+                    <TableRowCell>@supplier.ContactInformation</TableRowCell>
+                    <TableRowCell>
+                        <Button Color="Color.Secondary" Clicked="@(e => Edit(supplier))">
+                            Edit
+                        </Button>
+                        <Button Color="Color.Danger" Clicked="@(e => Delete(supplier))">
+                            Delete
+                        </Button>
+                    </TableRowCell>
+                </TableRow>
+            }
+        }
+        else
+        {
+            <TableRow>
+                <TableRowCell ColSpan="5">
+                    <Spinner />
+                </TableRowCell>
+            </TableRow>
+        }
+    </TableBody>
+</Table>
+
+@code {
+    [Parameter]
+    public List<Supplier> suppliers { get; set; }
+
+    [Parameter]
+    public EventCallback<Supplier> OnEditInventory { get; set; }
+
+    [Parameter]
+    public EventCallback<Supplier> OnDeleteInventory { get; set; }
+
+    private async Task Edit(Supplier supplier)
+    {
+        await OnEditInventory.InvokeAsync(supplier);
+    }
+
+    private async Task Delete(Supplier supplier)
+    {
+        await OnDeleteInventory.InvokeAsync(supplier);
+    }
+}
