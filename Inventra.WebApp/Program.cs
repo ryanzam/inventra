@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 
 builder.Services.AddTransient<IViewInventoriesBySearchTextUseCase, ViewInventoriesBySearchTextUseCase>();
 builder.Services.AddTransient<ISaveInventoryUseCase, SaveInventoryUseCase>();
+builder.Services.AddTransient<IDeleteInventoryUseCase, DeleteInventoryUseCase>();
 
 
 builder.Services

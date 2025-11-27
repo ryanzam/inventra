@@ -1,18 +1,34 @@
 ﻿@page "/inventories"
+@using System.Threading.Tasks
 
 @inject IViewInventoriesBySearchTextUseCase ViewInventoriesBySearchTextUseCase
 @inject ISaveInventoryUseCase AddInventoryUseCase
+@inject IDeleteInventoryUseCase DeleteInventoryUseCase
 
 <BarComponent Title="Inventory List" OnClickAdd="@ShowModal"/>
 
-<InventoryListComponent Inventories="@inventories" OnEditInventory="@OnEditInventory"/>
+<InventoryListComponent Inventories="@inventories" OnEditInventory="@OnEditInventory" OnDeleteInventory="@OnDeleteInventory"/>
 
 <InventoryModalComponent modalVisible="@modalVisible" OnCloseModal="@CloseModal" Save="@SaveInventory" Inventory="@selectedInventory"/>
 
+<SnackbarStack @ref="snackbarStack" Location="SnackbarStackLocation.BottomEnd" />
+
 @code {
     private List<Inventory> inventories = new();
+    private Inventory selectedInventory { get; set; } = new Inventory();
     private bool modalVisible = false;
-    private Inventory selectedInventory { get; set; }
+    SnackbarStack snackbarStack;
+
+
+    [Inject] IMessageService MessageService { get; set; }
+    [Inject] IToastService ToastService { get; set; }
+
+    bool? result;
+
+    async Task ShowConfirmDelete()
+    {
+        result = await MessageService.Confirm("Are you sure you want to delete the item?", "Confirmation");
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,16 +50,35 @@
         modalVisible = false;
     }
 
+
     private async Task SaveInventory(Inventory inventory)
     {
         await AddInventoryUseCase.ExecuteAsync(inventory);
         modalVisible = false;
         LoadInventories();
+        await ToastService.Success("Inventory saved successfully.");
     }
 
     private async Task OnEditInventory(Inventory inventory)
     {
         selectedInventory = inventory;
         modalVisible = true;
+    }
+
+    private async Task OnDeleteInventory(Inventory inventory)
+    {
+        selectedInventory = inventory;
+        result = await MessageService.Confirm("Are you sure you want to delete the item?", "Confirmation");
+        if(result == true)
+        {
+            await DeleteInventoryUseCase.ExecuteAsync(inventory.InventoryId);
+            LoadInventories();
+            await ToastService.Success("Inventory saved successfully.");
+        }
+    }
+
+    private void ShowSnackbar(string message, SnackbarColor color)
+    {
+        snackbarStack.PushAsync(message, color);
     }
 }

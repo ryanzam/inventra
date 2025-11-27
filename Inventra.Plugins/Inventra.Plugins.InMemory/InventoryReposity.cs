@@ -49,5 +49,15 @@ namespace Inventra.Plugins.InMemory
             }
             return await Task.FromResult(inventory);
         }
+
+        public async Task DeleteInventory(int inventoryId)
+        {
+            var inventoryToDelete = _inventories.FirstOrDefault(i => i.InventoryId == inventoryId);
+            if(inventoryToDelete != null)
+            {
+                _inventories.Remove(inventoryToDelete);
+            }
+            await Task.CompletedTask;
+        }
     }
 }

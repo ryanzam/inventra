@@ -24,7 +24,7 @@
                         <Button Color="Color.Secondary" Clicked="@(e => Edit(inventory))">
                             Edit
                         </Button>
-                        <Button Color="Color.Danger" Clicked="@(e => Delete(inventory.InventoryId))">
+                        <Button Color="Color.Danger" Clicked="@(e => Delete(inventory))">
                             Delete
                         </Button>
                     </TableRowCell>
@@ -50,15 +50,15 @@
     public EventCallback<Inventory> OnEditInventory { get; set;}
 
     [Parameter]
-    public EventCallback<int> OnDeleteInventory { get; set; } 
+    public EventCallback<Inventory> OnDeleteInventory { get; set; } 
     
     private async Task Edit(Inventory inventory)
     {
         await OnEditInventory.InvokeAsync(inventory);
     }
 
-    private async Task Delete(int inventoryId)
+    private async Task Delete(Inventory inventory)
     {
-        await OnDeleteInventory.InvokeAsync(inventoryId);
+        await OnDeleteInventory.InvokeAsync(inventory);
     }
 }

@@ -9,5 +9,6 @@ namespace Inventra.UseCases.Interfaces
     {
         Task<IEnumerable<Inventory>> GetInventoriesBySearchText(string searchText);
         Task<Inventory> SaveInventory(Inventory inventory);
+        Task DeleteInventory(int inventoryId);
     }
 }
