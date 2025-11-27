@@ -16,7 +16,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
 
 builder.Services.AddTransient<IViewInventoriesBySearchTextUseCase, ViewInventoriesBySearchTextUseCase>();
-builder.Services.AddTransient<IAddInventoryUseCase, AddInventoryUseCase>();
+builder.Services.AddTransient<ISaveInventoryUseCase, SaveInventoryUseCase>();
 
 
 builder.Services

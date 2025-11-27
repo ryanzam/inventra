@@ -29,10 +29,24 @@ namespace Inventra.Plugins.InMemory
             return _inventories.Where(i => i.InventoryName.Contains(searchText, StringComparison.OrdinalIgnoreCase))    ;
         }
 
-        public async Task<Inventory> AddInventory(Inventory inventory)
+        public async Task<Inventory> SaveInventory(Inventory inventory)
         {
-            inventory.InventoryId = _inventories.Max(i => i.InventoryId) + 1;
-            _inventories.Add(inventory);
+            if(inventory.InventoryId == 0)
+            {
+                var maxId = _inventories.Max(i => i.InventoryId);
+                inventory.InventoryId = maxId + 1;
+                _inventories.Add(inventory);
+            }
+            else
+            {
+                var existingInventory = _inventories.FirstOrDefault(i => i.InventoryId == inventory.InventoryId);
+                if(existingInventory != null)
+                {
+                    existingInventory.InventoryName = inventory.InventoryName;
+                    existingInventory.Quantity = inventory.Quantity;
+                    existingInventory.Price = inventory.Price;
+                }
+            }
             return await Task.FromResult(inventory);
         }
     }

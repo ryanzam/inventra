@@ -8,6 +8,6 @@ namespace Inventra.UseCases.Interfaces
     public interface IInventoryRepository
     {
         Task<IEnumerable<Inventory>> GetInventoriesBySearchText(string searchText);
-        Task<Inventory> AddInventory(Inventory inventory);
+        Task<Inventory> SaveInventory(Inventory inventory);
     }
 }

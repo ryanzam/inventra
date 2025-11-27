@@ -15,7 +15,20 @@
         {
             @foreach (var inventory in inventories)
             {
-                <InventoryItemComponent Inventory="inventory" />
+                <TableRow>
+                    <TableRowHeader>@inventory.InventoryId</TableRowHeader>
+                    <TableRowCell>@inventory.InventoryName</TableRowCell>
+                    <TableRowCell>@inventory.Quantity</TableRowCell>
+                    <TableRowCell>@inventory.Price</TableRowCell>
+                    <TableRowCell>
+                        <Button Color="Color.Secondary" Clicked="@(e => Edit(inventory))">
+                            Edit
+                        </Button>
+                        <Button Color="Color.Danger" Clicked="@(e => Delete(inventory.InventoryId))">
+                            Delete
+                        </Button>
+                    </TableRowCell>
+                </TableRow>
             }
         }
         else
@@ -33,5 +46,19 @@
     [Parameter]
     public List<Inventory> inventories { get; set; }
 
+    [Parameter]
+    public EventCallback<Inventory> OnEditInventory { get; set;}
+
+    [Parameter]
+    public EventCallback<int> OnDeleteInventory { get; set; } 
     
+    private async Task Edit(Inventory inventory)
+    {
+        await OnEditInventory.InvokeAsync(inventory);
+    }
+
+    private async Task Delete(int inventoryId)
+    {
+        await OnDeleteInventory.InvokeAsync(inventoryId);
+    }
 }

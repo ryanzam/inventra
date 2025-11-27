@@ -1,17 +1,18 @@
 ﻿@page "/inventories"
 
 @inject IViewInventoriesBySearchTextUseCase ViewInventoriesBySearchTextUseCase
-@inject IAddInventoryUseCase AddInventoryUseCase
+@inject ISaveInventoryUseCase AddInventoryUseCase
 
 <BarComponent Title="Inventory List" OnClickAdd="@ShowModal"/>
 
-<InventoryListComponent Inventories="@inventories"/>
+<InventoryListComponent Inventories="@inventories" OnEditInventory="@OnEditInventory"/>
 
-<InventoryModalComponent modalVisible="@modalVisible" OnCloseModal="@CloseModal" Save="@SaveInventory"/>
+<InventoryModalComponent modalVisible="@modalVisible" OnCloseModal="@CloseModal" Save="@SaveInventory" Inventory="@selectedInventory"/>
 
 @code {
     private List<Inventory> inventories = new();
     private bool modalVisible = false;
+    private Inventory selectedInventory { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,5 +39,11 @@
         await AddInventoryUseCase.ExecuteAsync(inventory);
         modalVisible = false;
         LoadInventories();
+    }
+
+    private async Task OnEditInventory(Inventory inventory)
+    {
+        selectedInventory = inventory;
+        modalVisible = true;
     }
 }
