@@ -15,7 +15,7 @@
 
 @code {
     private List<Inventory> inventories = new();
-    private Inventory selectedInventory { get; set; } = new Inventory();
+    private Inventory selectedInventory { get; set; }
     private bool modalVisible = false;
     SnackbarStack snackbarStack;
 
@@ -42,6 +42,7 @@
 
     private void ShowModal()
     {
+        selectedInventory = new Inventory();
         modalVisible = true;
     }
 
@@ -72,8 +73,8 @@
         if(result == true)
         {
             await DeleteInventoryUseCase.ExecuteAsync(inventory.InventoryId);
-            LoadInventories();
             await ToastService.Success("Inventory saved successfully.");
+            LoadInventories();
         }
     }
 

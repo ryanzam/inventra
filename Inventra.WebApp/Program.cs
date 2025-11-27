@@ -1,11 +1,14 @@
 using Blazorise;
+using Blazorise.FluentValidation;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.Tailwind;
+using FluentValidation;
 using Inventra.Plugins.InMemory;
 using Inventra.UseCases.Interfaces;
 using Inventra.UseCases.Inventories;
 using Inventra.UseCases.Inventories.interfaces;
 using Inventra.WebApp.Components;
+using Inventra.WebApp.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +26,14 @@ builder.Services.AddTransient<IDeleteInventoryUseCase, DeleteInventoryUseCase>()
 builder.Services
     .AddBlazorise()
     .AddTailwindProviders()
-    .AddFontAwesomeIcons();
+    .AddFontAwesomeIcons()
+    .AddBlazoriseFluentValidation();
+
+builder.Services.AddValidatorsFromAssembly(typeof(App).Assembly);
+
+builder.Services.AddValidatorsFromAssemblyContaining<InventoryValidator>();
+
+
 
 var app = builder.Build();
 

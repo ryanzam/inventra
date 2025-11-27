@@ -5,18 +5,26 @@
             <CloseButton />
         </ModalHeader>
         <ModalBody>
-            <Field>
-                <FieldLabel>Inventory Name</FieldLabel>
-                <TextEdit Placeholder="Enter inventory..." @bind-Text="inventory.InventoryName"/>
-            </Field>
-            <Field>
-                <FieldLabel>Quantity</FieldLabel>
-                <NumericEdit TValue="int" Placeholder="Enter quantity..." @bind-Value="inventory.Quantity" />
-            </Field>
-            <Field>
-                <FieldLabel>Price</FieldLabel>
-                <NumericEdit TValue="double" Placeholder="Enter price..." @bind-Value="inventory.Price" />
-            </Field>
+            <Validations @ref="fluentValidations" Mode="ValidationMode.Manual" Model="@inventory" HandlerType="typeof(FluentValidationHandler)">
+                <Validation>
+                    <Field>
+                        <FieldLabel>Inventory Name</FieldLabel>
+                        <TextEdit Placeholder="Enter inventory..." @bind-Text="inventory.InventoryName">
+                            <Feedback>
+                                <ValidationError />
+                            </Feedback>
+                        </TextEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>Quantity</FieldLabel>
+                        <NumericEdit TValue="int" Placeholder="Enter quantity..." @bind-Value="inventory.Quantity" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>Price</FieldLabel>
+                        <NumericEdit TValue="double" Placeholder="Enter price..." @bind-Value="inventory.Price" />
+                    </Field>
+                </Validation>
+            </Validations>
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Secondary" Clicked="@HideModal">Close</Button>
@@ -26,8 +34,10 @@
 </Modal>
 
 @code {
+    Validations fluentValidations;
+
     [Parameter]
-    public Inventory Inventory { get; set; }
+    public Inventory Inventory { get; set; } = new Inventory();
 
     [Parameter]
     public bool modalVisible { get; set; } = false;
@@ -38,7 +48,7 @@
     [Parameter]
     public EventCallback<bool> OnCloseModal { get; set; }
 
-    private Inventory inventory = new Inventory();
+    Inventory inventory = new();
 
     protected override void OnParametersSet()
     {
@@ -60,8 +70,11 @@
 
     private async Task SaveChanges(MouseEventArgs e)
     {
-        await Save.InvokeAsync(inventory);
-        inventory = new Inventory();
+        if(await fluentValidations.ValidateAll())
+        {
+            await Save.InvokeAsync(inventory);
+            inventory = new Inventory();
+        }
     }
 
     private async Task HideModal(MouseEventArgs e)
